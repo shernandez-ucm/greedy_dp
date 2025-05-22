@@ -4,48 +4,6 @@
 #include <string>
 #include <vector>
 
-class Item {
-  public:
-    int id;
-    int value;
-    int weight;
-    float value_weight{0.0};
-    
-    Item(int i,int v,int w){
-      id=i;
-      value=v;
-      weight=w;
-      if (w!=0){
-        value_weight=1.0*v/w;
-      }
-      else{
-        value_weight=v;
-      }
-    }
-    void display() const{
-      std::cout << "id: " << id << ",value: " << value << ",weight : "<< weight <<"\n";
-    }
-   
-};
-
-// Función para exportar el heap a formato DOT
-void export_heap_to_dot(const std::vector<Item>& heap, const std::string& filename) {
-  std::ofstream file(filename);
-  file << "digraph G {\n";
-  file << "  node [shape=circle];\n";
-  for (size_t i = 0; i < heap.size(); ++i) {
-      file << "  " << i << " [label=\""  << heap[i].value_weight << "\"];\n";
-      size_t left = 2 * i + 1;
-      size_t right = 2 * i + 2;
-      if (left < heap.size())
-          file << "  " << i << " -> " << left << ";\n";
-      if (right < heap.size())
-          file << "  " << i << " -> " << right << ";\n";
-  }
-  file << "}\n";
-  file.close();
-}
-
 int main() {
   // https://developers.google.com/optimization/pack/knapsack?hl=es-419#c++
   std::vector<int> values = {
