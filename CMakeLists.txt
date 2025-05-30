@@ -8,5 +8,7 @@ add_executable (heap_sort src/02_heapsort.cpp)
 add_executable (knapsack_heap src/03_heapsort_knapsack_solution.cpp)
 add_executable (knapsack_dp src/04_dp_knapsack_solution.cpp)
 add_executable (knapsack_test src/05_random_knapsack.cpp)
-add_executable (shortest_path src/06_shortest_path.cpp)
+add_executable (shortest_path src/graph.hpp src/06_shortest_path.cpp)
+add_executable (shortest_path_negative_weight src/graph.hpp src/06_shortest_path_negative_weight.cpp)
+
 
