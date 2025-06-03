@@ -37,3 +37,13 @@ CMakeFiles/
 .vscode/
 CMakeCache.txt
 CMakeOutput.log 
+cmake_install.cmake
+custom_sort
+graph.dot
+graph.svg
+heap_sort
+knapsack_dp
+knapsack_heap
+knapsack_test
+Makefile
+shortest_path
