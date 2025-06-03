@@ -12,13 +12,13 @@ int main() {
     vector<vector<int>> edges;
     vector<vector<pair<int,int>>> adj;
         edges = {
-        {0, 1, 5},
+        {1, 0, -5},
         {0, 2, 6},
         {2, 3, -3},
         {3, 1, -3},
     };
     adj.assign(V, {});
-    adj[0].push_back({1, 5});
+    adj[1].push_back({0, -5});
     adj[0].push_back({2, 6});
     adj[2].push_back({3, -3});
     adj[3].push_back({1, -3});
