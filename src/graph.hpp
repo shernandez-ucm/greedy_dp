@@ -47,6 +47,19 @@ vector<int> dijkstra(int V, vector<vector<pair<int,int>>>& adj, int src) {
     return dist;
 }
 
+// Convierte una lista de adyacencia a matriz de adyacencia
+std::vector<std::vector<int>> adjListToMatrix(int V, const std::vector<std::vector<std::pair<int,int>>>& adj) {
+    const int INF = std::numeric_limits<int>::max() / 2; // Para evitar overflow
+    std::vector<std::vector<int>> matrix(V, std::vector<int>(V, INF));
+    for (int i = 0; i < V; ++i) {
+        matrix[i][i] = 0; // Distancia a sí mismo es 0
+        for (const auto& [j, w] : adj[i]) {
+            matrix[i][j] = w;
+        }
+    }
+    return matrix;
+}
+
 // Algoritmo de Floyd-Warshall para encontrar todas las distancias más cortas entre pares de nodos
 std::vector<std::vector<int>> floydWarshall(int V, const std::vector<std::vector<int>>& adjMatrix) {
     const int INF = std::numeric_limits<int>::max() / 2; // Para evitar overflow

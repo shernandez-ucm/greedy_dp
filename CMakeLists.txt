@@ -10,6 +10,7 @@ add_executable (knapsack_dp src/04_dp_knapsack_solution.cpp)
 add_executable (knapsack_test src/05_random_knapsack.cpp)
 add_executable (shortest_path src/graph.hpp src/06_shortest_path.cpp)
 add_executable (shortest_path_negative_weight src/graph.hpp src/06_shortest_path_negative_weight.cpp)
+add_executable (shortest_path_floyd_warshall src/graph.hpp src/06_shortest_path_floyd_warshall.cpp)
 add_executable (coin_change_heap src/07_coin_change.cpp)
 
 
