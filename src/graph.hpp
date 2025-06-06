@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <queue>
 #include <random>
 #include <fstream>
@@ -46,38 +47,64 @@ vector<int> dijkstra(int V, vector<vector<pair<int,int>>>& adj, int src) {
     return dist;
 }
 
+// Algoritmo de Floyd-Warshall para encontrar todas las distancias más cortas entre pares de nodos
+std::vector<std::vector<int>> floydWarshall(int V, const std::vector<std::vector<int>>& adjMatrix) {
+    const int INF = std::numeric_limits<int>::max() / 2; // Para evitar overflow
+    std::vector<std::vector<int>> dist = adjMatrix;
+
+    // Inicializar: si no hay arista, poner INF (excepto en la diagonal)
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            if (i != j && dist[i][j] == 0)
+                dist[i][j] = INF;
+        }
+    }
+
+    // Floyd-Warshall
+    for (int k = 0; k < V; ++k) {
+        for (int i = 0; i < V; ++i) {
+            for (int j = 0; j < V; ++j) {
+                if (dist[i][k] < INF && dist[k][j] < INF)
+                    dist[i][j] = std::min(dist[i][j], dist[i][k] + dist[k][j]);
+            }
+        }
+    }
+    return dist;
+}
+
+// Busca si el vértice v está en la lista de adyacencia de u
+bool is_adjacent(int u, int v, const std::vector<std::vector<std::pair<int,int>>>& adj) {
+    for (const auto& neighbor : adj[u]) {
+        if (neighbor.first == v) return true;
+    }
+    return false;
+}
+
 // Genera un grafo aleatorio dirigido y ponderado
 void generarGrafo(int V, int E, vector<vector<int>>& edges, vector<vector<pair<int,int>>>& adj) {
     std::random_device rd;
+    unsigned int seed=1;
+    std::srand(seed);
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> node_dist(0, V-1);
-    std::uniform_int_distribution<> weight_dist(1, 20); // pesos negativos y positivos
+    std::uniform_int_distribution<> weight_dist(-5, 20); // pesos negativos y positivos
 
     edges.clear();
     adj.assign(V, {});
+    for (int i = 1; i < V; ++i) {
+        int w = weight_dist(gen);
+        edges.push_back({i-1, i, w});
+        adj[i-1].push_back({i, w});
+    }
 
-    for (int i = 0; i < E; ++i) {
+     for (int i = V-1; i < E; ++i) {
         int u = node_dist(gen);
         int v = node_dist(gen);
-        while (v == u) v = node_dist(gen); // evitar bucles
         int w = weight_dist(gen);
-        bool exists = false;
-        for (auto [vi, wi] : adj[u]) {
-            if (vi == v) {
-                exists = true;
-                break;
-            }
-        }
-        if (!exists) {
-            edges.push_back({u, v, w});
-            //edges.push_back({v, u, w}); // si quieres grafo no dirigido
-            //edges.push_back({u, v, w});
-            edges.push_back({v, u, w});
-            adj[v].push_back({u, w});
-            adj[u].push_back({v, w});
-        }
-        
-    }
+        while (v == u or is_adjacent(u,v,adj)) v = node_dist(gen); // evitar bucles
+        edges.push_back({u, v, w});
+        adj[u].push_back({v, w});
+    } 
 }
 
 void mostrarGrafoGraphviz(int V, const vector<vector<pair<int,int>>>& adj, const std::string& filename = "graph.dot") {
