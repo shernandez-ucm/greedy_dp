@@ -6,6 +6,18 @@
 #include <fstream>
 using namespace std;
 
+// Convierte una lista de adyacencia a lista de aristas
+std::vector<std::vector<int>> adjListToEdgeList(const std::vector<std::vector<std::pair<int,int>>>& adj) {
+    std::vector<std::vector<int>> edges;
+    int V = adj.size();
+    for (int u = 0; u < V; ++u) {
+        for (const auto& [v, w] : adj[u]) {
+            edges.push_back({u, v, w});
+        }
+    }
+    return edges;
+}
+
 vector<int> bellmanFord(int V, vector<vector<int>>& edges, int src) {
     vector<int> dist(V, std::numeric_limits<int>::max() );
     dist[src] = 0;

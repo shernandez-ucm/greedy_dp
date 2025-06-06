@@ -47,3 +47,6 @@ knapsack_heap
 knapsack_test
 Makefile
 shortest_path
+shortest_path_negative_weight
+shortest_path_floyd_warshall
+shortest_path_floyd_warshall
