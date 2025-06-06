@@ -27,7 +27,7 @@ int main() {
     for (const auto& row : adj_matrix) {
         for (int d : row) {
             if (d == std::numeric_limits<int>::max() / 2)
-                cout << "0 ";
+                cout << "INF ";
             else
                 cout << d << " ";
         }
